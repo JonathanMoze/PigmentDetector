@@ -4,6 +4,6 @@
 
 Auteurs:
 
-Barrey Victor
-Dupouey Léo
+Barrey Victor,
+Dupouey Léo,
 Moze Jonathan
