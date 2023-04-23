@@ -1,4 +1,4 @@
-#Projet de programmation Master 1 informatique
+# Projet de programmation Master 1 informatique
 
 ## Détection automatique de pigments bleu par réseau de neuronnes.
 
