@@ -22,7 +22,7 @@ def getSmallPredMask(img, model) :
     
     nb_masks = predMask[0]['masks'].size()[0]
     if(nb_masks == 0) :
-        return Image.new('L', (256,256), 0)
+        return Image.new('L', img.size, 0)
     allPredMasks = np.zeros(np.shape(predMask[0]['masks'][0, 0]))
 
     for i in range(nb_masks) :
@@ -47,22 +47,18 @@ def getFullPredMask(full_img, model, sub_img_size) :
     while x <width :
         y=0
         if x + sub_img_size >= width:
-            x = width-sub_img_size
+            x = width-sub_img_size +1
         while y <height :
             if y + sub_img_size >= height :
-                y = height-sub_img_size
+                y = height-sub_img_size +2 
             cropped_img = full_img.crop((x, y, x + sub_img_size, y+sub_img_size))
             cropped_mask = getSmallPredMask(cropped_img, model).convert('L')
-            
-            """ for xi in range(cropped_mask.width) :
-                for yi in range(cropped_mask.height): 
-                    #if xi == cropped_mask.width
-                    mask.putpixel((x+xi,y+yi), cropped_mask.getpixel((xi,yi))) """
+
             mask.paste(cropped_mask, (x,y))
-            y+=sub_img_size
-        x+=sub_img_size
-    mask = mask.filter(ImageFilter.MinFilter(3)) #erosion
-    mask = mask.filter(ImageFilter.MaxFilter(3)) #dilatation
+            y+=sub_img_size-2
+        x+=sub_img_size-1
+    #mask = mask.filter(ImageFilter.MinFilter(3)) #erosion
+    #mask = mask.filter(ImageFilter.MaxFilter(3)) #dilatation
     return mask
 
 
